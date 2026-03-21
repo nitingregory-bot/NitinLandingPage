@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nitin Gregory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1a1a1a;
+      --text: #e0e0e0;
+      --text-muted: #707070;
+      --accent: #4a9eff;
+      --accent-hover: #7bbcff;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', -apple-system, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 80px 24px 120px;
+    }
+
+    /* Header */
+    .header {
+      margin-bottom: 72px;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .header .tagline {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .header .tagline span {
+      color: var(--accent);
+    }
+
+    /* Status bar */
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .status .dot {
+      width: 6px;
+      height: 6px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* Sections */
+    section {
+      margin-bottom: 56px;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Bullet list */
+    .bullets {
+      list-style: none;
+    }
+
+    .bullets li {
+      position: relative;
+      padding-left: 16px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .bullets li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--text-muted);
+    }
+
+    .highlight {
+      color: #ffffff;
+      font-weight: 400;
+    }
+
+    /* Links */
+    a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.25s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    a:hover {
+      color: var(--accent-hover);
+      border-bottom-color: var(--accent-hover);
+    }
+
+    /* Experience blocks */
+    .role {
+      margin-bottom: 28px;
+    }
+
+    .role-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .role-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    .role-period {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .role-company {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    /* Metrics grid */
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+
+    .metric {
+      background: var(--surface);
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    .metric-value {
+      font-family: var(--mono);
+      font-size: 24px;
+      font-weight: 400;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+    }
+
+    /* Links section */
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .link-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      transition: all 0.25s ease;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .link-card:hover {
+      border-color: var(--accent);
+      color: var(--accent-hover);
+      background: rgba(74, 158, 255, 0.03);
+      border-bottom-color: var(--accent);
+    }
+
+    .link-card .arrow {
+      margin-left: auto;
+      transition: transform 0.25s ease;
+      font-size: 12px;
+    }
+
+    .link-card:hover .arrow {
+      transform: translateX(3px);
+    }
+
+    /* Sign out button */
+    .signout-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 16px;
+    }
+
+    .signout-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 1px;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .signout-btn:hover {
+      border-color: #ff4a4a;
+      color: #ff4a4a;
+    }
+
+    /* Page hidden until auth check */
+    .container { opacity: 0; transition: opacity 0.3s ease; }
+    .container.loaded { opacity: 1; }
+
+    /* Footer */
+    footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .container {
+        padding: 48px 20px 80px;
+      }
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+      .link-grid {
+        grid-template-columns: 1fr;
+      }
+      .header h1 {
+        font-size: 26px;
+      }
+      footer {
+        flex-direction: column;
+        gap: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Sign Out -->
+    <div class="signout-bar">
+      <button class="signout-btn" onclick="signOut()">sign out</button>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+      <h1>Nitin Gregory</h1>
+      <div class="tagline"><span>//</span> finance leader &middot; writer &middot; strategist</div>
+      <div class="status">
+        <div class="dot"></div>
+        Head of FP&A &amp; Reporting &mdash; Foulath Holding, Bahrain
+      </div>
+    </header>
+
+    <!-- Metrics -->
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-value">16+</div>
+        <div class="metric-label">Years</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">4</div>
+        <div class="metric-label">Countries</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">3</div>
+        <div class="metric-label">Industries</div>
+      </div>
+    </div>
+
+    <!-- About -->
+    <section>
+      <div class="section-label">About</div>
+      <ul class="bullets">
+        <li>Finance leader with deep roots in <span class="highlight">FP&A, controllership, and treasury</span></li>
+        <li>Built and led teams across <span class="highlight">India, UK, China, and the Middle East</span></li>
+        <li>Works at the junction of <span class="highlight">finance, economics, and psychology</span></li>
+        <li>Known for making complex ideas simple for boards and CXOs</li>
+      </ul>
+    </section>
+
+    <!-- Key Achievements -->
+    <section>
+      <div class="section-label">Key Achievements</div>
+      <ul class="bullets">
+        <li>Led financial planning and board-level reporting for a <span class="highlight">steel holding company</span> in the Middle East</li>
+        <li>Drove <span class="highlight">turnaround and profit recovery</span> at a UK bus maker during a major restructuring</li>
+        <li>Set up cost controls and budgets that cut waste across <span class="highlight">automotive and FMCG operations</span></li>
+        <li>Built reporting frameworks used by <span class="highlight">CXOs and VPs</span> to guide capital decisions</li>
+        <li>Directed treasury operations across multi-country business units</li>
+      </ul>
+    </section>
+
+    <!-- Experience -->
+    <section>
+      <div class="section-label">Experience</div>
+
+      <div class="role">
+        <div class="role-header">
+          <span class="role-title">Head &mdash; Financial Planning &amp; Reporting</span>
+          <span class="role-period">current</span>
+        </div>
+        <div class="role-company">Foulath Holding &middot; Bahrain</div>
+        <ul class="bullets">
+          <li>Owns FP&A, investment reviews, and board reporting for the group</li>
+          <li>Guides capital allocation across steel sector subsidiaries</li>
+        </ul>
+      </div>
+
+      <div class="role">
+        <div class="role-header">
+          <span class="role-title">AVP Finance</span>
+          <span class="role-period">prev</span>
+        </div>
+        <div class="role-company">Godrej &amp; Boyce Mfg. Co. Ltd. &middot; India</div>
+        <ul class="bullets">
+          <li>Regional finance head across multiple business units</li>
+          <li>Led process upgrades that improved reporting speed and accuracy</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Writing -->
+    <section>
+      <div class="section-label">Writing</div>
+      <ul class="bullets">
+        <li>Covers <span class="highlight">factor investing</span>, momentum strategies, and market behavior</li>
+        <li>Writes on economic policy &mdash; GST, Brexit, demonetization</li>
+        <li>Analyzes business models &mdash; Chambal Fertilizers, VST Industries</li>
+        <li>Explores how psychology shapes financial decisions</li>
+      </ul>
+    </section>
+
+    <!-- What Others Say -->
+    <section>
+      <div class="section-label">What Others Say</div>
+      <ul class="bullets">
+        <li>"Very quick in understanding complex concepts"</li>
+        <li>"The best at explaining tough ideas to management in a simple way"</li>
+        <li>"Good insight into drivers of the business"</li>
+      </ul>
+    </section>
+
+    <!-- Links -->
+    <section>
+      <div class="section-label">Connect</div>
+      <div class="link-grid">
+        <a href="https://www.linkedin.com/in/nitingregory/" target="_blank" rel="noopener" class="link-card">
+          LinkedIn <span class="arrow">&rarr;</span>
+        </a>
+        <a href="https://nitingregory.com" target="_blank" rel="noopener" class="link-card">
+          Blog <span class="arrow">&rarr;</span>
+        </a>
+        <a href="https://twitter.com" target="_blank" rel="noopener" class="link-card">
+          Twitter / X <span class="arrow">&rarr;</span>
+        </a>
+        <a href="mailto:contact@nitingregory.com" class="link-card">
+          Email <span class="arrow">&rarr;</span>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <span>&copy; 2026 Nitin Gregory</span>
+      <span>Built with intent.</span>
+    </footer>
+
+  </div>
+
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    (async () => {
+      await requireAuth();
+      document.querySelector('.container').classList.add('loaded');
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — Nitin Gregory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1a1a1a;
+      --border-focus: #2a2a2a;
+      --text: #e0e0e0;
+      --text-muted: #707070;
+      --accent: #4a9eff;
+      --accent-hover: #7bbcff;
+      --error: #ff4a4a;
+      --success: #22c55e;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', -apple-system, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-container {
+      width: 100%;
+      max-width: 380px;
+      padding: 24px;
+    }
+
+    /* Header */
+    .auth-header {
+      margin-bottom: 48px;
+    }
+
+    .auth-header h1 {
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+
+    .auth-header .subtitle {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .auth-header .subtitle span {
+      color: var(--accent);
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab {
+      flex: 1;
+      padding: 12px 0;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.25s ease;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+
+    .tab:hover {
+      color: var(--text);
+    }
+
+    .tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.25s ease;
+    }
+
+    .form-input::placeholder {
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    .form-input:focus {
+      border-color: var(--accent);
+    }
+
+    /* Button */
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      margin-top: 8px;
+    }
+
+    .btn:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Messages */
+    .message {
+      font-size: 13px;
+      padding: 10px 14px;
+      margin-bottom: 20px;
+      display: none;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .message.error {
+      display: block;
+      color: var(--error);
+      border: 1px solid rgba(255, 74, 74, 0.2);
+      background: rgba(255, 74, 74, 0.05);
+    }
+
+    .message.success {
+      display: block;
+      color: var(--success);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      background: rgba(34, 197, 94, 0.05);
+    }
+
+    /* Forgot password link */
+    .forgot-link {
+      display: block;
+      text-align: right;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-top: -12px;
+      margin-bottom: 20px;
+      transition: color 0.25s ease;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: var(--sans);
+      margin-left: auto;
+    }
+
+    .forgot-link:hover {
+      color: var(--accent-hover);
+    }
+
+
+    /* Footer */
+    .auth-footer {
+      margin-top: 48px;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .auth-footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    .auth-footer a:hover {
+      color: var(--accent-hover);
+    }
+
+    /* Hidden panels */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* Loading spinner */
+    .btn .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(0,0,0,0.2);
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 480px) {
+      .auth-container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-container">
+    <div class="auth-header">
+      <h1>Nitin Gregory</h1>
+      <div class="subtitle"><span>//</span> private access</div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" data-panel="signin">Sign In</button>
+      <button class="tab" data-panel="signup">Sign Up</button>
+    </div>
+
+    <!-- Status message -->
+    <div id="message" class="message"></div>
+
+    <!-- Sign In Panel -->
+    <div id="signin" class="panel active">
+      <form id="signin-form">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="signin-email" placeholder="you@example.com" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="signin-password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required autocomplete="current-password">
+        </div>
+        <button type="button" class="forgot-link" id="forgot-btn">Forgot password?</button>
+        <button type="submit" class="btn" id="signin-btn">Sign In</button>
+      </form>
+
+    </div>
+
+    <!-- Sign Up Panel -->
+    <div id="signup" class="panel">
+      <form id="signup-form">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="signup-email" placeholder="you@example.com" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="signup-password" placeholder="Min 6 characters" required minlength="6" autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Confirm Password</label>
+          <input type="password" class="form-input" id="signup-confirm" placeholder="Repeat password" required minlength="6" autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn" id="signup-btn">Create Account</button>
+      </form>
+    </div>
+
+    <!-- Reset Password Panel -->
+    <div id="reset" class="panel">
+      <form id="reset-form">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="reset-email" placeholder="you@example.com" required autocomplete="email">
+        </div>
+        <button type="submit" class="btn" id="reset-btn">Send Reset Link</button>
+      </form>
+      <button type="button" class="forgot-link" id="back-to-signin" style="margin-top: 16px; text-align: center; width: 100%;">&larr; Back to sign in</button>
+    </div>
+
+    <div class="auth-footer">
+      <a href="https://nitingregory.com" target="_blank">nitingregory.com</a>
+    </div>
+  </div>
+
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    // Elements
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.panel');
+    const msgEl = document.getElementById('message');
+
+    // Redirect if already logged in
+    redirectIfLoggedIn();
+
+    // Tab switching
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.panel;
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        panels.forEach(p => p.classList.remove('active'));
+        document.getElementById(target).classList.add('active');
+        clearMessage();
+      });
+    });
+
+    // Forgot password
+    document.getElementById('forgot-btn').addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      document.getElementById('reset').classList.add('active');
+      clearMessage();
+    });
+
+    document.getElementById('back-to-signin').addEventListener('click', () => {
+      panels.forEach(p => p.classList.remove('active'));
+      document.getElementById('signin').classList.add('active');
+      tabs[0].classList.add('active');
+      clearMessage();
+    });
+
+    // Show message
+    function showMessage(text, type) {
+      msgEl.textContent = text;
+      msgEl.className = 'message ' + type;
+    }
+
+    function clearMessage() {
+      msgEl.className = 'message';
+      msgEl.textContent = '';
+    }
+
+    function setLoading(btn, loading) {
+      if (loading) {
+        btn.disabled = true;
+        btn.dataset.originalText = btn.textContent;
+        btn.innerHTML = '<span class="spinner"></span>';
+      } else {
+        btn.disabled = false;
+        btn.textContent = btn.dataset.originalText;
+      }
+    }
+
+    // Sign In
+    document.getElementById('signin-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('signin-btn');
+      const email = document.getElementById('signin-email').value.trim();
+      const password = document.getElementById('signin-password').value;
+
+      clearMessage();
+      setLoading(btn, true);
+
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        showMessage(error.message, 'error');
+        setLoading(btn, false);
+      } else {
+        window.location.href = 'index.html';
+      }
+    });
+
+    // Sign Up
+    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('signup-btn');
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const confirm = document.getElementById('signup-confirm').value;
+
+      clearMessage();
+
+      if (password !== confirm) {
+        showMessage('Passwords do not match.', 'error');
+        return;
+      }
+
+      setLoading(btn, true);
+
+      const { error } = await supabase.auth.signUp({ email, password });
+
+      if (error) {
+        showMessage(error.message, 'error');
+        setLoading(btn, false);
+      } else {
+        showMessage('Check your email to confirm your account.', 'success');
+        setLoading(btn, false);
+      }
+    });
+
+    // Reset Password
+    document.getElementById('reset-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('reset-btn');
+      const email = document.getElementById('reset-email').value.trim();
+
+      clearMessage();
+      setLoading(btn, true);
+
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + '/index.html'
+      });
+
+      if (error) {
+        showMessage(error.message, 'error');
+      } else {
+        showMessage('Reset link sent. Check your email.', 'success');
+      }
+      setLoading(btn, false);
+    });
+
+  </script>
+</body>
+</html>
