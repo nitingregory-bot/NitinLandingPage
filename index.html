@@ -447,11 +447,13 @@
   <script>
     (async () => {
       try {
-        await requireAuth();
-        document.querySelector('.container').classList.add('loaded');
+        const session = await requireAuth();
+        if (session) {
+          document.querySelector('.container').classList.add('loaded');
+        }
       } catch (e) {
         console.error('Auth error:', e);
-        document.querySelector('.container').classList.add('loaded');
+        window.location.href = 'login.html';
       }
     })();
   </script>
