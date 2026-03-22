@@ -446,8 +446,13 @@
   <script src="auth.js"></script>
   <script>
     (async () => {
-      await requireAuth();
-      document.querySelector('.container').classList.add('loaded');
+      try {
+        await requireAuth();
+        document.querySelector('.container').classList.add('loaded');
+      } catch (e) {
+        console.error('Auth error:', e);
+        document.querySelector('.container').classList.add('loaded');
+      }
     })();
   </script>
 </body>

@@ -340,8 +340,8 @@
     const panels = document.querySelectorAll('.panel');
     const msgEl = document.getElementById('message');
 
-    // Redirect if already logged in
-    redirectIfLoggedIn();
+    // Redirect if already logged in (but don't block page if it fails)
+    try { redirectIfLoggedIn(); } catch(e) { console.error(e); }
 
     // Tab switching
     tabs.forEach(tab => {
