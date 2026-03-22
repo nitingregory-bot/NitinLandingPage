@@ -445,17 +445,14 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="auth.js"></script>
   <script>
-    (async () => {
-      try {
-        const session = await requireAuth();
-        if (session) {
-          document.querySelector('.container').classList.add('loaded');
-        }
-      } catch (e) {
-        console.error('Auth error:', e);
-        window.location.href = 'login.html';
+    requireAuth().then(function(session) {
+      if (session) {
+        document.querySelector('.container').classList.add('loaded');
       }
-    })();
+    }).catch(function(e) {
+      console.error('Auth error:', e);
+      window.location.replace(getBasePath() + 'login.html');
+    });
   </script>
 </body>
 </html>

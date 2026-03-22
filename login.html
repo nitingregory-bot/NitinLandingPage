@@ -402,7 +402,7 @@
       clearMessage();
       setLoading(btn, true);
 
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { error } = await sb.auth.signInWithPassword({ email, password });
 
       if (error) {
         showMessage(error.message, 'error');
@@ -429,7 +429,7 @@
 
       setLoading(btn, true);
 
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { error } = await sb.auth.signUp({ email, password });
 
       if (error) {
         showMessage(error.message, 'error');
@@ -449,8 +449,8 @@
       clearMessage();
       setLoading(btn, true);
 
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin + '/index.html'
+      const { error } = await sb.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + getBasePath() + 'index.html'
       });
 
       if (error) {
