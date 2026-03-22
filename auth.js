@@ -4,6 +4,12 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// Get base path (works on both localhost and GitHub Pages)
+function getBasePath() {
+  const path = window.location.pathname;
+  return path.substring(0, path.lastIndexOf('/') + 1);
+}
+
 // Check if user is logged in
 async function getSession() {
   const { data: { session } } = await supabase.auth.getSession();
@@ -14,7 +20,7 @@ async function getSession() {
 async function requireAuth() {
   const session = await getSession();
   if (!session) {
-    window.location.href = 'login.html';
+    window.location.href = getBasePath() + 'login.html';
   }
   return session;
 }
@@ -23,12 +29,12 @@ async function requireAuth() {
 async function redirectIfLoggedIn() {
   const session = await getSession();
   if (session) {
-    window.location.href = 'index.html';
+    window.location.href = getBasePath() + 'index.html';
   }
 }
 
 // Sign out
 async function signOut() {
   await supabase.auth.signOut();
-  window.location.href = 'login.html';
+  window.location.href = getBasePath() + 'login.html';
 }

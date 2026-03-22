@@ -408,7 +408,7 @@
         showMessage(error.message, 'error');
         setLoading(btn, false);
       } else {
-        window.location.href = 'index.html';
+        window.location.href = getBasePath() + 'index.html';
       }
     });
 
